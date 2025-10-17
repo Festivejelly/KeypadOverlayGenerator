@@ -11,10 +11,11 @@ A web-based tool to create custom overlays for membrane keypads. Design, customi
 - 🎯 Multiple button content types (text, symbols, shapes)
 - 🌈 Individual button color customization
 - 📝 Multi-line text support
-- 🖼️ Outer border and padding options
-- � Save/Load configurations as JSON files
-- �📥 Export as SVG for perfect printing
+- 🖼️ Outer border with individual padding per side (perfect for cutting templates)
+- 💾 Save/Load configurations as JSON files
+- � Export as SVG for perfect printing
 - 🎯 Print-ready output at actual size
+- ✂️ Asymmetric padding support (e.g., 10mm top/bottom, 7mm left/right)
 
 ## Usage
 

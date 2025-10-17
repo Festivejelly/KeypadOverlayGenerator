@@ -14,13 +14,19 @@ The Keypad Overlay Generator saves configurations as JSON files. This allows you
 - This ensures precise alignment when printing and measuring
 - The spacing between buttons remains exactly as specified
 
+### Outer Container Padding
+- Individual padding values for Top, Bottom, Left, and Right
+- Allows asymmetric padding (e.g., 10mm top/bottom, 7mm left/right)
+- Perfect for creating cutting templates that match your keypad exactly
+- Config version 1.1+ supports individual padding; version 1.0 uses single value for all sides
+
 ## Example Configuration
 
-Here's an example of a saved configuration file:
+Here's an example of a saved configuration file (version 1.1):
 
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "settings": {
     "rows": 4,
     "cols": 4,
@@ -35,7 +41,10 @@ Here's an example of a saved configuration file:
     "outerBorderWidth": 1,
     "outerBorderColor": "#000000",
     "outerBorderRadius": 3,
-    "outerBorderPadding": 5,
+    "outerBorderPaddingTop": 10,
+    "outerBorderPaddingBottom": 10,
+    "outerBorderPaddingLeft": 7,
+    "outerBorderPaddingRight": 7,
     "outerBackgroundColor": "#f0f0f0"
   },
   "buttons": [

@@ -15,7 +15,10 @@ export default function KeypadOverlayGenerator() {
   const [outerBorderWidth, setOuterBorderWidth] = useState(0);
   const [outerBorderColor, setOuterBorderColor] = useState('#000000');
   const [outerBorderRadius, setOuterBorderRadius] = useState(0);
-  const [outerBorderPadding, setOuterBorderPadding] = useState(5);
+  const [outerBorderPaddingTop, setOuterBorderPaddingTop] = useState(5);
+  const [outerBorderPaddingBottom, setOuterBorderPaddingBottom] = useState(5);
+  const [outerBorderPaddingLeft, setOuterBorderPaddingLeft] = useState(5);
+  const [outerBorderPaddingRight, setOuterBorderPaddingRight] = useState(5);
   const [outerBackgroundColor, setOuterBackgroundColor] = useState('#ffffff');
   const [buttons, setButtons] = useState(
     Array(4).fill(null).map((_, i) => 
@@ -64,9 +67,9 @@ export default function KeypadOverlayGenerator() {
   // Small padding to prevent edge clipping (since borders are now inside buttons, we need minimal padding)
   const padding = 0.5;
   
-  // Calculate container size (buttons + padding + outer border padding)
-  const containerWidth = totalWidth + padding * 2 + outerBorderPadding * 2;
-  const containerHeight = totalHeight + padding * 2 + outerBorderPadding * 2;
+  // Calculate container size (buttons + padding + outer border padding for each side)
+  const containerWidth = totalWidth + padding * 2 + outerBorderPaddingLeft + outerBorderPaddingRight;
+  const containerHeight = totalHeight + padding * 2 + outerBorderPaddingTop + outerBorderPaddingBottom;
   
   // Add extra space for outer border stroke (so it doesn't get clipped)
   const outerBorderStrokeOffset = outerBorderWidth;
@@ -91,7 +94,7 @@ export default function KeypadOverlayGenerator() {
 
   const saveConfiguration = () => {
     const config = {
-      version: '1.0',
+      version: '1.1',
       settings: {
         rows,
         cols,
@@ -106,7 +109,10 @@ export default function KeypadOverlayGenerator() {
         outerBorderWidth,
         outerBorderColor,
         outerBorderRadius,
-        outerBorderPadding,
+        outerBorderPaddingTop,
+        outerBorderPaddingBottom,
+        outerBorderPaddingLeft,
+        outerBorderPaddingRight,
         outerBackgroundColor,
       },
       buttons,
@@ -151,7 +157,23 @@ export default function KeypadOverlayGenerator() {
         setOuterBorderWidth(config.settings.outerBorderWidth);
         setOuterBorderColor(config.settings.outerBorderColor);
         setOuterBorderRadius(config.settings.outerBorderRadius);
-        setOuterBorderPadding(config.settings.outerBorderPadding);
+        
+        // Handle backward compatibility with old config format (v1.0)
+        if (config.settings.outerBorderPadding !== undefined) {
+          // Old format - single padding value for all sides
+          const oldPadding = config.settings.outerBorderPadding;
+          setOuterBorderPaddingTop(oldPadding);
+          setOuterBorderPaddingBottom(oldPadding);
+          setOuterBorderPaddingLeft(oldPadding);
+          setOuterBorderPaddingRight(oldPadding);
+        } else {
+          // New format (v1.1+) - individual padding for each side
+          setOuterBorderPaddingTop(config.settings.outerBorderPaddingTop ?? 5);
+          setOuterBorderPaddingBottom(config.settings.outerBorderPaddingBottom ?? 5);
+          setOuterBorderPaddingLeft(config.settings.outerBorderPaddingLeft ?? 5);
+          setOuterBorderPaddingRight(config.settings.outerBorderPaddingRight ?? 5);
+        }
+        
         setOuterBackgroundColor(config.settings.outerBackgroundColor);
         
         // Load buttons
@@ -521,17 +543,58 @@ export default function KeypadOverlayGenerator() {
                 </div>
 
                 <div className="mt-2">
-                  <label className="block text-sm font-medium mb-1">Padding (mm)</label>
-                  <input
-                    type="number"
-                    min="0"
-                    max="50"
-                    step="0.5"
-                    value={outerBorderPadding}
-                    onChange={(e) => setOuterBorderPadding(parseFloat(e.target.value))}
-                    className="w-full px-3 py-2 border rounded"
-                  />
-                  <p className="text-xs text-gray-500 mt-1">Space between border and buttons</p>
+                  <label className="block text-sm font-medium mb-2">Padding (mm)</label>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <label className="block text-xs text-gray-600 mb-1">Top</label>
+                      <input
+                        type="number"
+                        min="0"
+                        max="50"
+                        step="0.5"
+                        value={outerBorderPaddingTop}
+                        onChange={(e) => setOuterBorderPaddingTop(parseFloat(e.target.value))}
+                        className="w-full px-2 py-1 border rounded text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs text-gray-600 mb-1">Bottom</label>
+                      <input
+                        type="number"
+                        min="0"
+                        max="50"
+                        step="0.5"
+                        value={outerBorderPaddingBottom}
+                        onChange={(e) => setOuterBorderPaddingBottom(parseFloat(e.target.value))}
+                        className="w-full px-2 py-1 border rounded text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs text-gray-600 mb-1">Left</label>
+                      <input
+                        type="number"
+                        min="0"
+                        max="50"
+                        step="0.5"
+                        value={outerBorderPaddingLeft}
+                        onChange={(e) => setOuterBorderPaddingLeft(parseFloat(e.target.value))}
+                        className="w-full px-2 py-1 border rounded text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs text-gray-600 mb-1">Right</label>
+                      <input
+                        type="number"
+                        min="0"
+                        max="50"
+                        step="0.5"
+                        value={outerBorderPaddingRight}
+                        onChange={(e) => setOuterBorderPaddingRight(parseFloat(e.target.value))}
+                        className="w-full px-2 py-1 border rounded text-sm"
+                      />
+                    </div>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-2">Space between border and buttons on each side</p>
                 </div>
 
                 <div className="mt-2">
@@ -639,8 +702,8 @@ export default function KeypadOverlayGenerator() {
                       const btnColor = button.buttonColor || buttonColor;
                       const btnBorderColor = button.borderColor || borderColor;
                       const btnTextColor = button.textColor || textColor;
-                      const offsetX = outerBorderStrokeOffset + outerBorderPadding + padding;
-                      const offsetY = outerBorderStrokeOffset + outerBorderPadding + padding;
+                      const offsetX = outerBorderStrokeOffset + outerBorderPaddingLeft + padding;
+                      const offsetY = outerBorderStrokeOffset + outerBorderPaddingTop + padding;
                       return (
                         <g key={`${i}-${j}`} transform={`translate(${x + offsetX}, ${y + offsetY})`}>
                           {renderShape(btnColor, btnBorderColor)}
