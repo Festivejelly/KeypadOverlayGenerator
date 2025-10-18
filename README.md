@@ -8,12 +8,12 @@ A web-based tool to create custom overlays for membrane keypads. Design, customi
 
 - 🎨 Fully customizable button layouts (up to 8x8 grid)
 - 📏 Precise measurements in millimeters
-- 🎯 Multiple button content types (text, symbols, shapes)
+- 🎯 Multiple button content types: text, circle, triangle, square, play, stop, menu, gear
 - 🌈 Individual button color customization
 - 📝 Multi-line text support
 - 🖼️ Outer border with individual padding per side (perfect for cutting templates)
 - 💾 Save/Load configurations as JSON files
-- � Export as SVG for perfect printing
+- 📥 Export as SVG for perfect printing
 - 🎯 Print-ready output at actual size
 - ✂️ Asymmetric padding support (e.g., 10mm top/bottom, 7mm left/right)
 

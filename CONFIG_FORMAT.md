@@ -82,5 +82,13 @@ Here's an example of a saved configuration file (version 1.1):
 
 - The configuration includes all settings and button customizations
 - Button-specific settings (fontSize, colors) can be `null` to use global defaults
-- The `contentType` can be: `text`, `circle`, `triangle`, `square`, `play`, or `stop`
+- The `contentType` can be: `text`, `circle`, `triangle`, `square`, `play`, `stop`, `menu`, or `gear`
+  - **text**: Custom text label (supports multi-line with `|` separator)
+  - **circle**: Circle outline symbol
+  - **triangle**: Triangle outline symbol
+  - **square**: Square outline symbol
+  - **play**: Filled play triangle (pointing right)
+  - **stop**: Filled square symbol
+  - **menu**: Hamburger menu icon (three horizontal lines)
+  - **gear**: Settings/gear icon with teeth
 - Multi-line text uses `|` as a separator (e.g., `"Zero|Probe"`)
