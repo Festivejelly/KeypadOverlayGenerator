@@ -24,7 +24,7 @@ export default function KeypadOverlayGenerator() {
     Array(4).fill(null).map((_, i) => 
       Array(4).fill(null).map((_, j) => ({
         text: `${i * 4 + j + 1}`,
-        contentType: 'text', // 'text', 'circle', 'triangle', 'square', 'play', 'stop', 'menu', 'gear'
+        contentType: 'text', // 'text', 'circle', 'triangle', 'square', 'play', 'stop', 'menu', 'gear', 'crosshair'
         fontSize: null,
         buttonColor: null,
         borderColor: null,
@@ -337,6 +337,34 @@ export default function KeypadOverlayGenerator() {
         return (
           <g transform={`translate(${gearTx}, ${gearTy}) scale(${gearScale})`}>
             <path d={gearPath} fill={color} fillRule="evenodd" />
+          </g>
+        );
+      
+      case 'crosshair':
+        // Circle with center dot (for CNC probing/zeroing) ⊙
+        const outerRadius = symbolSize * 0.45;
+        const dotRadius = symbolSize * 0.1;
+        const strokeThick = borderWidth * 1.5;
+        
+        return (
+          <g>
+            {/* Outer circle */}
+            <circle
+              cx={centerX}
+              cy={centerY}
+              r={outerRadius}
+              fill="none"
+              stroke={color}
+              strokeWidth={strokeThick}
+            />
+            {/* Center dot */}
+            <circle
+              cx={centerX}
+              cy={centerY}
+              r={dotRadius}
+              fill={color}
+              stroke="none"
+            />
           </g>
         );
       
@@ -791,6 +819,7 @@ export default function KeypadOverlayGenerator() {
                         <option value="stop">■ Stop</option>
                         <option value="menu">☰ Menu</option>
                         <option value="gear">⚙ Gear</option>
+                        <option value="crosshair">⊕ Probe</option>
                       </select>
                       <input
                         type="text"
